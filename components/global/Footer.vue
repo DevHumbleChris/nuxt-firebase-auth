@@ -12,7 +12,7 @@ const year = computed(() => {
     <div class="text-center">
       <div>
         <a
-          class="flex-none text-xl font-semibold text-black"
+          class="flex-none text-xl font-semibold text-[#00dc82]"
           href="#"
           aria-label="Brand"
           >Nuxt Firebase Auth Starter</a
@@ -21,16 +21,16 @@ const year = computed(() => {
       <!-- End Col -->
 
       <div class="mt-3">
-        <p class="text-gray-500">
+        <p class="text-white">
           Built with 😍💖,
           <NuxtLink
             to="https://the-coding-montana.vercel.app"
-            class="font-semibold text-blue-600 hover:text-blue-700"
+            class="font-semibold text-[#00dc82] hover:text-blue-700"
             target="_blank"
             >The Coding Montana</NuxtLink
           >.
         </p>
-        <p class="text-gray-500">© Nuxt Firebase Auth Starter. {{ year }}.</p>
+        <p class="text-gray-400">© Nuxt Firebase Auth Starter. {{ year }}.</p>
       </div>
 
       <!-- Social Brands -->
