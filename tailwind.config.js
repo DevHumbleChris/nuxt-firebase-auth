@@ -12,6 +12,9 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      raleway: ["Raleway", "sans-serif"],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
