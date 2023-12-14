@@ -14,6 +14,9 @@ dependencies:
   lucide-vue-next:
     specifier: ^0.295.0
     version: 0.295.0(vue@3.3.11)
+  preline:
+    specifier: ^2.0.2
+    version: 2.0.2
   tailwind-merge:
     specifier: ^2.1.0
     version: 2.1.0
@@ -1464,6 +1467,10 @@ packages:
   /@polka/url@1.0.0-next.24:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
     dev: true
+
+  /@popperjs/core@2.11.8:
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+    dev: false
 
   /@rollup/plugin-alias@5.1.0(rollup@4.9.0):
     resolution: {integrity: sha512-lpA3RZ9PdIG7qqhEfv79tBffNaoDuukFDrmhLqg9ifv99u/ehn+lOg30x2zmhf8AQqQUZaMk/B9fZraQ6/acDQ==}
@@ -5331,6 +5338,12 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
+
+  /preline@2.0.2:
+    resolution: {integrity: sha512-CDBUb7TpJ5C3UbW3ynuC82MWs34o9jW9vgbyn4wiYRbHspLi6hff9R2Ug9tLVkQgdyjKXotI7RB9Sm71+3v+jQ==}
+    dependencies:
+      '@popperjs/core': 2.11.8
+    dev: false
 
   /pretty-bytes@6.1.1:
     resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
