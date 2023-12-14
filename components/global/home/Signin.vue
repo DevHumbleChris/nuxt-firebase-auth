@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white max-w-md mx-auto rounded-3xl p-10 space-y-5">
-    <div class="space-y-4 flex items-center gap-5">
+  <div class="bg-white max-w-md mx-auto rounded-3xl p-5 sm:p-10 space-y-5">
+    <div class="space-y-4 flex flex-col sm:flex-row sm:items-center sm:gap-5">
       <img
         src="https://tailus.io/sources/blocks/social/preview/images/icon.svg"
         loading="lazy"
@@ -8,8 +8,7 @@
         alt="tailus logo"
       />
       <h2 class="mb-8 text-2xl font-bold text-gray-800 dark:text-white">
-        Sign in to unlock the <br />
-        best of Tailus.
+        Sign in to unlock the best of My Application.
       </h2>
     </div>
     <form action="" class="space-y-3">

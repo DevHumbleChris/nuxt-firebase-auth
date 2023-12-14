@@ -1,9 +1,7 @@
 <template>
   <!-- Hero -->
-  <div
-    class="bg-[#0c0129] relative overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/component/squared-bg-element-dark.svg')] before:bg-no-repeat before:bg-top before:w-full before:h-full before:-z-[1] before:transform before:-translate-x-1/2"
-  >
-    <div class="max-w-[75rem] mx-auto sm:px-6 lg:px-8 sm:pt-12 pb-10">
+  <div class="bg-[#0c0129]">
+    <div class="max-w-[75rem] mx-auto sm:px-6 lg:px-8 sm:pt-16 pb-10">
       <!-- Announcement Banner -->
       <div class="px-10 py-24 mx-auto max-w-7xl">
         <div class="w-full mx-auto text-left md:text-center">

@@ -32,6 +32,7 @@
     "clsx": "^2.0.0",
     "lucide-vue-next": "^0.295.0",
     "preline": "^2.0.2",
+    "radix-vue": "^1.2.4",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7"
   }
