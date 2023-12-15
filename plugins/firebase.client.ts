@@ -18,4 +18,12 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const auth = getAuth(app);
   const firestore = getFirestore(app);
+
+  // Attaching the Auth and Firestore for global useage
+
+  nuxtApp.vueApp.provide("auth", auth);
+  nuxtApp.provide("auth", auth);
+
+  nuxtApp.vueApp.provide("firestore", firestore);
+  nuxtApp.provide("firestore", firestore);
 });
