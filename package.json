@@ -30,6 +30,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "firebase": "^10.7.1",
     "lucide-vue-next": "^0.295.0",
     "preline": "^2.0.2",
     "radix-vue": "^1.2.4",
