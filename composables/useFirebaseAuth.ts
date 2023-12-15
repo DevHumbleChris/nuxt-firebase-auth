@@ -65,6 +65,7 @@ export default function () {
   };
 
   const signinWith = async (provider: string): Promise<IResponse> => {
+    console.log(provider);
     const selectedProvider = useState<AuthProvider | null>(
       "selectedProvider",
       () => null
@@ -80,8 +81,9 @@ export default function () {
         selectedProvider.value = providers.github;
         break;
     }
+
     try {
-      await signInWithPopup($auth, selectedProvider);
+      await signInWithPopup($auth, selectedProvider.value);
       return {
         message: `Signin With ${provider} Successfully!`,
         error: null,
