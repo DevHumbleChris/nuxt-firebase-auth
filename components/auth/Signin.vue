@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const email = useState("emailSignin", () => "");
+const password = useState("passwordSignin", () => "");
+const { signinUser } = useFirebaseAuth();
+
+const signInWithCredential = async () => {
+  const { message, error } = await signinUser(email.value, password.value);
+  console.log(message, error);
+};
+</script>
+
 <template>
   <div class="bg-white max-w-md mx-auto rounded-3xl p-5 sm:p-10 space-y-5">
     <div class="space-y-4 flex flex-col sm:flex-row sm:items-center sm:gap-5">
@@ -11,7 +22,7 @@
         Sign in to unlock the best of My Application.
       </h2>
     </div>
-    <form action="" class="space-y-3">
+    <form @submit.prevent="signInWithCredential" class="space-y-3">
       <div class="space-y-2">
         <!-- Socials -->
         <div class="space-y-3">
@@ -55,8 +66,9 @@
               name="email"
               type="email"
               autocomplete="email"
+              v-model="email"
               required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>
@@ -72,8 +84,9 @@
               name="password"
               type="password"
               autocomplete="password"
+              v-model="password"
               required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>

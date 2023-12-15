@@ -42,24 +42,26 @@ export default function () {
     }
   };
 
-  const signinUser = async (email: string, password: string) => {
+  const signinUser = async (
+    email: string,
+    password: string
+  ): Promise<IResponse> => {
     try {
-      const userCreds = await signInWithEmailAndPassword(
-        $auth,
-        email,
-        password
-      );
-      if (userCreds) {
-        user.value = userCreds.user;
-        return true;
-      }
+      await signInWithEmailAndPassword($auth, email, password);
+      return {
+        message: "User Created Successfully!",
+        error: null,
+      };
     } catch (error: unknown) {
+      let errorResponse: IResponse = {
+        message: null,
+        error: null,
+      };
       if (error instanceof Error) {
-        // handle error
+        errorResponse.error = error.message;
       }
-      return false;
+      return errorResponse;
     }
-    return false;
   };
 
   const signinWith = async (provider: string): Promise<IResponse> => {
