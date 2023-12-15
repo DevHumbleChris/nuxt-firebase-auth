@@ -1,5 +1,5 @@
 <script setup>
-import Signin from "~/components/global/home/Signin.vue";
+import Signin from "~/components/auth/Signin.vue";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 </script>

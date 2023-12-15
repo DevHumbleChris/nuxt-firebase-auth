@@ -1,16 +1,50 @@
-import { createUserWithEmailAndPassword, type User } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GithubAuthProvider,
+  FacebookAuthProvider,
+  signInWithPopup,
+  type AuthProvider,
+} from "firebase/auth";
 
 export default function () {
   const { $auth } = useNuxtApp();
+  const providers = {
+    google: new GithubAuthProvider(),
+    facebook: new FacebookAuthProvider(),
+    github: new GithubAuthProvider(),
+  };
 
-  const user = useState<User | null>("fb_user", () => null);
+  interface IResponse {
+    message: string | null;
+    error: string | null;
+  }
 
   const registerUser = async (
     email: string,
     password: string
-  ): Promise<boolean> => {
+  ): Promise<IResponse> => {
     try {
-      const userCreds = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword($auth, email, password);
+      return {
+        message: "User Created Successfully!",
+        error: null,
+      };
+    } catch (error: unknown) {
+      let errorResponse: IResponse = {
+        message: null,
+        error: null,
+      };
+      if (error instanceof Error) {
+        errorResponse.error = error.message;
+      }
+      return errorResponse;
+    }
+  };
+
+  const signinUser = async (email: string, password: string) => {
+    try {
+      const userCreds = await signInWithEmailAndPassword(
         $auth,
         email,
         password
@@ -28,8 +62,43 @@ export default function () {
     return false;
   };
 
+  const signinWith = async (provider: string): Promise<IResponse> => {
+    const selectedProvider = useState<AuthProvider | null>(
+      "selectedProvider",
+      () => null
+    );
+    switch (provider) {
+      case "google":
+        selectedProvider.value = providers.google;
+        break;
+      case "facebook":
+        selectedProvider.value = providers.facebook;
+        break;
+      case "github":
+        selectedProvider.value = providers.github;
+        break;
+    }
+    try {
+      await signInWithPopup($auth, selectedProvider);
+      return {
+        message: `Signin With ${provider} Successfully!`,
+        error: null,
+      };
+    } catch (error: unknown) {
+      let errorResponse: IResponse = {
+        message: null,
+        error: null,
+      };
+      if (error instanceof Error) {
+        errorResponse.error = error.message;
+      }
+      return errorResponse;
+    }
+  };
+
   return {
-    user,
     registerUser,
+    signinUser,
+    signinWith,
   };
 }
