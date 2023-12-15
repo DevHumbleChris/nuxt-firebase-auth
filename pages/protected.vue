@@ -5,5 +5,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div>Protected</div>
+  <div class="text-4xl mt-16 text-white text-center">Protected</div>
 </template>

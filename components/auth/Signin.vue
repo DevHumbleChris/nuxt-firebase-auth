@@ -4,22 +4,56 @@ const password = useState("passwordSignin", () => "");
 const { signinUser, signinWith } = useFirebaseAuth();
 import { toast } from "vue3-toastify";
 
+const authStore = useAuthStore();
+
+const isAuthenticating = useState("isAuthenticating", () => false);
+
+const appName = computed(() => {
+  return authStore?.appName;
+});
+
+const signinAuthProviders = computed(() => {
+  return authStore?.signinAuthProviders;
+});
+
+const noOfCheckedProviders = computed(() => {
+  return authStore?.noOfCheckedProviders;
+});
+
 const signInWithCredential = async () => {
+  isAuthenticating.value = true;
   const { message, error } = await signinUser(email.value, password.value);
   if (error) {
-    toast.error(error, {
+    isAuthenticating.value = false;
+    return toast.error(error, {
       theme: "colored",
     });
   }
+  isAuthenticating.value = false;
+  email.value = "";
+  password.value = "";
+  toast.success(message as string, {
+    theme: "colored",
+  });
+  await navigateTo({ path: "/protected" });
 };
 
 const providerSignin = async (providerType: string) => {
+  isAuthenticating.value = true;
   const { message, error } = await signinWith(providerType);
   if (error) {
-    toast.error(error, {
+    isAuthenticating.value = false;
+    return toast.error(error, {
       theme: "colored",
     });
   }
+  isAuthenticating.value = false;
+  email.value = "";
+  password.value = "";
+  toast.success(message as string, {
+    theme: "colored",
+  });
+  await navigateTo({ path: "/protected" });
 };
 </script>
 
@@ -33,36 +67,40 @@ const providerSignin = async (providerType: string) => {
         alt="tailus logo"
       />
       <h2 class="mb-8 text-2xl font-bold text-gray-800 dark:text-white">
-        Sign in to unlock the best of My Application.
+        Sign in to unlock the best of
+        {{ appName ? appName : "My Application" }}.
       </h2>
     </div>
     <!-- Socials -->
-    <div>
-      <button
-        @click="providerSignin('github')"
-        class="group w-full relative flex h-11 items-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-white dark:before:bg-gray-700 dark:before:border-gray-600 before:border before:border-gray-200 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:bg-gray-300 disabled:before:scale-100"
-      >
-        <span
-          class="w-full relative flex justify-center items-center gap-3 text-base font-medium text-gray-600 dark:text-gray-200"
+    <div class="space-y-3">
+      <div v-for="authType in signinAuthProviders" :key="authType.id">
+        <button
+          v-if="authType.isChecked"
+          @click="providerSignin(authType.type)"
+          class="group w-full relative flex h-11 items-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-white dark:before:bg-gray-700 dark:before:border-gray-600 before:border before:border-gray-200 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:bg-gray-300 disabled:before:scale-100"
+          :disabled="isAuthenticating"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            class="w-5 h-5 absolute left-0"
-            viewBox="0 0 16 16"
+          <span
+            class="w-full relative flex justify-center items-center gap-3 text-base font-medium text-gray-600 dark:text-gray-200"
           >
-            <path
-              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+            <Icon
+              :name="
+                isAuthenticating ? 'eos-icons:bubble-loading' : authType.icon
+              "
+              class="w-5 h-5 absolute left-0"
             />
-          </svg>
-          <span class="text-sm">Continue with Github</span>
-        </span>
-      </button>
+            <span class="text-sm"
+              >Continue with
+              <span class="capitalize">{{ authType.type }}</span></span
+            >
+          </span>
+        </button>
+      </div>
     </div>
     <!-- End Of Socials -->
     <form @submit.prevent="signInWithCredential" class="space-y-3">
       <div class="space-y-2">
-        <div class="flex items-center">
+        <div v-if="noOfCheckedProviders > 0" class="flex items-center">
           <div class="w-full h-[0.05rem] bg-gray-400 rounded-xl"></div>
           <p class="text-black px-3">Or</p>
           <div class="w-full h-[0.05rem] bg-gray-400 rounded-xl"></div>
@@ -109,9 +147,15 @@ const providerSignin = async (providerType: string) => {
       <div>
         <button
           type="submit"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          class="flex w-full items-center gap-2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          :disabled="isAuthenticating"
         >
-          Sign in
+          <Icon
+            v-if="isAuthenticating"
+            name="eos-icons:bubble-loading"
+            class="w-5"
+          />
+          <span> Signin </span>
         </button>
       </div>
     </form>

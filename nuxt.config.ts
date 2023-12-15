@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxtjs/google-fonts",
     "nuxt-og-image",
+    "@pinia/nuxt",
   ],
   shadcn: {
     /**
@@ -37,5 +38,8 @@ export default defineNuxtConfig({
       FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
       FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     },
+  },
+  pinia: {
+    storesDirs: ["./stores/**"],
   },
 });
