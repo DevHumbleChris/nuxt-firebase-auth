@@ -30,21 +30,25 @@ const setUsePhoneNumber = () => {
 };
 
 const signInWithCredential = async () => {
-  isAuthenticating.value = true;
-  const { message, error } = await signinUser(email.value, password.value);
-  if (error) {
+  if (isUsePhoneNumber) {
+    console.log("Hello");
+  } else {
+    isAuthenticating.value = true;
+    const { message, error } = await signinUser(email.value, password.value);
+    if (error) {
+      isAuthenticating.value = false;
+      return toast.error(error, {
+        theme: "colored",
+      });
+    }
     isAuthenticating.value = false;
-    return toast.error(error, {
+    email.value = "";
+    password.value = "";
+    toast.success(message as string, {
       theme: "colored",
     });
+    await navigateTo({ path: "/protected" });
   }
-  isAuthenticating.value = false;
-  email.value = "";
-  password.value = "";
-  toast.success(message as string, {
-    theme: "colored",
-  });
-  await navigateTo({ path: "/protected" });
 };
 
 const providerSignin = async (providerType: string) => {
@@ -182,6 +186,7 @@ const providerSignin = async (providerType: string) => {
             v-model="phoneNo"
             class="text-black py-2 shadow-sm rounded-md border border-gray-300"
             id="phoneNo"
+            required
           ></vue-tel-input>
         </div>
       </div>
