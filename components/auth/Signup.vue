@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const email = useState("emailSignin", () => "");
 const password = useState("passwordSignin", () => "");
-const phoneNo = useState("phoneNumber", () => null);
 const { signinUser, signinWith } = useFirebaseAuth();
 import { toast } from "vue3-toastify";
 
@@ -20,14 +19,6 @@ const signinAuthProviders = computed(() => {
 const noOfCheckedProviders = computed(() => {
   return authStore?.noOfCheckedProviders;
 });
-
-const isUsePhoneNumber = computed(() => {
-  return authStore?.isUsePhoneNumber;
-});
-
-const setUsePhoneNumber = () => {
-  authStore?.setUsePhoneNumber();
-};
 
 const signInWithCredential = async () => {
   isAuthenticating.value = true;
@@ -76,7 +67,7 @@ const providerSignin = async (providerType: string) => {
         alt="tailus logo"
       />
       <h2 class="mb-8 text-2xl font-bold text-gray-800 dark:text-white">
-        Sign in to unlock the best of
+        Sign up to unlock the best of
         {{ appName ? appName : "My Application" }}.
       </h2>
     </div>
@@ -116,73 +107,41 @@ const providerSignin = async (providerType: string) => {
         </div>
       </div>
       <div class="space-y-2">
-        <div v-if="!isUsePhoneNumber" class="space-y-2">
-          <div>
-            <div class="flex items-center justify-between">
-              <label
-                for="email"
-                class="block text-sm font-medium leading-6 text-gray-900"
-                >Email address</label
-              >
-              <button
-                type="button"
-                @click="setUsePhoneNumber"
-                class="block text-blue-600 font-bold text-sm"
-              >
-                Use Phone
-              </button>
-            </div>
-            <div class="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                v-model="email"
-                required
-                class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              for="password"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
-            >
-            <div class="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="password"
-                v-model="password"
-                required
-                class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
+        <div>
+          <label
+            for="email"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Email address</label
+          >
+          <div class="mt-2">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              v-model="email"
+              required
+              class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
           </div>
         </div>
-        <div v-if="isUsePhoneNumber" class="space-y-2">
-          <div class="flex items-center justify-between">
-            <label
-              for="phoneNo"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Phone Number</label
-            >
-            <button
-              type="button"
-              @click="setUsePhoneNumber"
-              class="block text-blue-600 font-bold text-sm"
-            >
-              Use Email
-            </button>
+        <div>
+          <label
+            for="password"
+            class="block text-sm font-medium leading-6 text-gray-900"
+            >Password</label
+          >
+          <div class="mt-2">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="password"
+              v-model="password"
+              required
+              class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
           </div>
-          <vue-tel-input
-            v-model="phoneNo"
-            class="text-black py-2 shadow-sm rounded-md border border-gray-300"
-            id="phoneNo"
-          ></vue-tel-input>
         </div>
       </div>
       <div>
@@ -196,7 +155,7 @@ const providerSignin = async (providerType: string) => {
             name="eos-icons:bubble-loading"
             class="w-5"
           />
-          <span> Signin </span>
+          <span> Create Account </span>
         </button>
       </div>
     </form>

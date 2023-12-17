@@ -13,6 +13,11 @@ export const useAuthStore = defineStore("authStore", () => {
   );
 
   const appName = useState("appNameOnStore", () => "");
+  const isUsePhoneNumber = useState("isUsePhoneNumber", () => false);
+
+  const setUsePhoneNumber = () => {
+    isUsePhoneNumber.value = !isUsePhoneNumber.value;
+  };
 
   const setStoreAppName = (payload: string) => {
     appName.value = payload;
@@ -37,5 +42,7 @@ export const useAuthStore = defineStore("authStore", () => {
     noOfCheckedProviders,
     setStoreAppName,
     appName,
+    setUsePhoneNumber,
+    isUsePhoneNumber,
   };
 });

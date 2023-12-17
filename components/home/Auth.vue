@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Signin from "~/components/auth/Signin.vue";
+import Signup from "~/components/auth/Signup.vue";
 import { Label } from "@/components/ui/label";
 import { type ISigninProviders } from "~/types/index";
 
@@ -15,6 +16,24 @@ const signinAuthProviders = useState<ISigninProviders[]>(
     ];
   }
 );
+
+const isUsePhoneNumber = computed(() => {
+  return authStore?.isUsePhoneNumber;
+});
+
+const useEmailAddress = useState("useEmailAddress", () => false);
+
+const usePhoneNumber = useState("usePhoneNumber", () => false);
+
+watchEffect(() => {
+  if (isUsePhoneNumber.value) {
+    usePhoneNumber.value = true;
+    useEmailAddress.value = false;
+  } else {
+    useEmailAddress.value = true;
+    usePhoneNumber.value = false;
+  }
+});
 
 const appName = useState("appName", () => "");
 
@@ -68,7 +87,8 @@ const previewScreen = async (screenType: string) => {
         <div class="flex items-center p-2 gap-3 bg-[#0f172a]">
           <button
             @click="setAuthBuildType('signin')"
-            class="flex items-center gap-x-1 text-xs font-medium px-2 py-1 rounded-md bg-[#1e293b]"
+            class="flex items-center gap-x-1 text-xs font-medium px-2 py-1 rounded-md hover:bg-[#1e293b]"
+            :class="{ 'bg-[#1e293b]': authBuildType === 'signin' }"
           >
             <Icon name="vscode-icons:file-type-nuxt" class="w-5 h-auto" />
             <span>Signin.vue</span>
@@ -76,6 +96,7 @@ const previewScreen = async (screenType: string) => {
           <button
             @click="setAuthBuildType('signup')"
             class="flex items-center gap-x-1 text-xs font-medium px-2 py-1 rounded-md hover:bg-[#1e293b]"
+            :class="{ 'bg-[#1e293b]': authBuildType === 'signup' }"
           >
             <Icon name="vscode-icons:file-type-nuxt" class="w-5 h-auto" />
             <span>Signup.vue</span>
@@ -86,7 +107,7 @@ const previewScreen = async (screenType: string) => {
             Let's build your
             <span class="text-[#00dc82] font-semibold">&lt;SignIn /&gt;</span>
           </h2>
-          <form action="" class="px-2 space-y-3">
+          <form class="px-2 space-y-3">
             <div>
               <label
                 for="app-name"
@@ -119,7 +140,12 @@ const previewScreen = async (screenType: string) => {
                   <label
                     class="relative inline-flex items-center cursor-pointer"
                   >
-                    <input type="checkbox" value="" class="sr-only peer" />
+                    <input
+                      type="checkbox"
+                      v-model="useEmailAddress"
+                      class="sr-only peer disabled:cursor-none"
+                      disabled
+                    />
                     <div
                       class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                     ></div>
@@ -142,7 +168,12 @@ const previewScreen = async (screenType: string) => {
                   <label
                     class="relative inline-flex items-center cursor-pointer"
                   >
-                    <input type="checkbox" value="" class="sr-only peer" />
+                    <input
+                      type="checkbox"
+                      v-model="usePhoneNumber"
+                      class="sr-only peer disabled:cursor-none"
+                      disabled
+                    />
                     <div
                       class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
                     ></div>
@@ -208,7 +239,8 @@ const previewScreen = async (screenType: string) => {
         <div
           class="bg-gradient-to-r from-green-500 to-green-700 rounded-b-xl p-5 sm:p-10"
         >
-          <Signin />
+          <Signin v-if="authBuildType === 'signin'" />
+          <Signup v-if="authBuildType === 'signup'" />
         </div>
       </div>
     </div>
