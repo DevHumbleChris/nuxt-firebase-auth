@@ -4,13 +4,14 @@ import {
   GithubAuthProvider,
   FacebookAuthProvider,
   signInWithPopup,
+  GoogleAuthProvider,
   type AuthProvider,
 } from "firebase/auth";
 
 export default function () {
   const { $auth } = useNuxtApp();
   const providers = {
-    google: new GithubAuthProvider(),
+    google: new GoogleAuthProvider(),
     facebook: new FacebookAuthProvider(),
     github: new GithubAuthProvider(),
   };
