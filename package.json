@@ -13,7 +13,6 @@
     "@nuxt/devtools": "latest",
     "@nuxtjs/google-fonts": "^3.1.3",
     "@nuxtjs/tailwindcss": "^6.10.1",
-    "@types/vue-tel-input": "^2.1.6",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.7",
     "nuxt-og-image": "3.0.0-rc.10",
@@ -39,7 +38,6 @@
     "radix-vue": "^1.2.4",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
-    "vue-tel-input": "^8.3.1",
     "vue3-toastify": "^0.1.14"
   }
 }

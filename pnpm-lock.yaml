@@ -53,9 +53,6 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.3.6)
-  vue-tel-input:
-    specifier: ^8.3.1
-    version: 8.3.1(typescript@5.3.3)
   vue3-toastify:
     specifier: ^0.1.14
     version: 0.1.14(vue@3.3.11)
@@ -70,9 +67,6 @@ devDependencies:
   '@nuxtjs/tailwindcss':
     specifier: ^6.10.1
     version: 6.10.1
-  '@types/vue-tel-input':
-    specifier: ^2.1.6
-    version: 2.1.6
   nuxt:
     specifier: ^3.8.2
     version: 3.8.2(typescript@5.3.3)(vite@5.0.8)
@@ -2760,12 +2754,6 @@ packages:
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
     dev: true
 
-  /@types/vue-tel-input@2.1.6:
-    resolution: {integrity: sha512-oHbfRAzl6cWIEDlYwSAOAhRYmjtyT1j170pcvm1r0EoxxAA9bvY/zMygdWlpQgDeYBsZds3f07DfSIFtXiYxZg==}
-    dependencies:
-      vue: 2.7.15
-    dev: true
-
   /@types/web-bluetooth@0.0.20:
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
     dev: true
@@ -3171,14 +3159,6 @@ packages:
     dependencies:
       '@vue/compiler-core': 3.3.11
       '@vue/shared': 3.3.11
-
-  /@vue/compiler-sfc@2.7.15:
-    resolution: {integrity: sha512-FCvIEevPmgCgqFBH7wD+3B97y7u7oj/Wr69zADBf403Tui377bThTjBvekaZvlRr4IwUAu3M6hYZeULZFJbdYg==}
-    dependencies:
-      '@babel/parser': 7.23.6
-      postcss: 8.4.32
-      source-map: 0.6.1
-    dev: true
 
   /@vue/compiler-sfc@3.3.11:
     resolution: {integrity: sha512-U4iqPlHO0KQeK1mrsxCN0vZzw43/lL8POxgpzcJweopmqtoYy9nljJzWDIQS3EfjiYhfdtdk9Gtgz7MRXnz3GA==}
@@ -5752,10 +5732,6 @@ packages:
     dependencies:
       readable-stream: 2.3.8
     dev: true
-
-  /libphonenumber-js@1.10.51:
-    resolution: {integrity: sha512-vY2I+rQwrDQzoPds0JeTEpeWzbUJgqoV0O4v31PauHBb/e+1KCXKylHcDnBMgJZ9fH9mErsEbROJY3Z3JtqEmg==}
-    dev: false
 
   /lighthouse-logger@2.0.1:
     resolution: {integrity: sha512-ioBrW3s2i97noEmnXxmUq7cjIcVRjT5HBpAYy8zE11CxU9HqlWHHeRxfeN1tn8F7OEMVPIC9x1f8t3Z7US9ehQ==}
@@ -9147,15 +9123,6 @@ packages:
       vue: 3.3.11(typescript@5.3.3)
     dev: true
 
-  /vue-tel-input@8.3.1(typescript@5.3.3):
-    resolution: {integrity: sha512-+YMFf1Dq/H9xJ2QQ0dDtPrCRNdfWCMCZ78/29qV9BJ9cf7BAFv4jpBPNQU4DyOqoOd0BEujVw9SRJ+fcXPO21Q==}
-    dependencies:
-      libphonenumber-js: 1.10.51
-      vue: 3.3.11(typescript@5.3.3)
-    transitivePeerDependencies:
-      - typescript
-    dev: false
-
   /vue3-toastify@0.1.14(vue@3.3.11):
     resolution: {integrity: sha512-2wyzMhWq8IjTclL25tqKWknDFdFI1vPueMGZpHNlPWf6TBfxBycBANS+2n4W1xD7tHhX4G6HhCe31sle6OpwYQ==}
     engines: {node: '>=16', npm: '>=7'}
@@ -9167,13 +9134,6 @@ packages:
     dependencies:
       vue: 3.3.11(typescript@5.3.3)
     dev: false
-
-  /vue@2.7.15:
-    resolution: {integrity: sha512-a29fsXd2G0KMRqIFTpRgpSbWaNBK3lpCTOLuGLEDnlHWdjB8fwl6zyYZ8xCrqkJdatwZb4mGHiEfJjnw0Q6AwQ==}
-    dependencies:
-      '@vue/compiler-sfc': 2.7.15
-      csstype: 3.1.3
-    dev: true
 
   /vue@3.3.11(typescript@5.3.3):
     resolution: {integrity: sha512-d4oBctG92CRO1cQfVBZp6WJAs0n8AK4Xf5fNjQCBeKCvMI1efGQ5E3Alt1slFJS9fZuPcFoiAiqFvQlv1X7t/w==}
