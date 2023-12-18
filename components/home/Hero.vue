@@ -1,9 +1,9 @@
 <template>
   <!-- Hero -->
-  <div class="bg-[#0c0129]">
+  <div>
     <div class="max-w-[75rem] mx-auto sm:px-6 lg:px-8 sm:pt-16 pb-10">
       <!-- Announcement Banner -->
-      <div class="px-10 py-24 mx-auto max-w-7xl">
+      <div class="px-10 py-4 sm:py-24 mx-auto max-w-7xl">
         <div class="w-full mx-auto text-left md:text-center">
           <h1
             class="mb-6 text-5xl font-extrabold leading-none max-w-5xl mx-auto tracking-normal text-white sm:text-6xl md:text-6xl lg:text-6xl md:tracking-tight"

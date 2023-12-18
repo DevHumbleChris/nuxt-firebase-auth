@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Footer from "~/components/global/Footer.vue";
+import Header from "~/components/global/Header.vue";
 useHead({
   htmlAttrs: {
     lang: "en",
@@ -54,6 +55,7 @@ defineOgImageComponent("Nuxt", {
 
 <template>
   <main class="max-w-[90rem] mx-auto">
+    <Header />
     <slot />
     <Footer />
   </main>

@@ -49,7 +49,7 @@ const previewScreen = async (screenType: string) => {
 </script>
 
 <template>
-  <section class="p-5 sm:p-10 text-white -mt-[4rem]">
+  <section class="p-5 sm:p-10 text-white -mt-[4rem]" id="components">
     <div>
       <div
         class="max-w-7xl mx-auto space-y-4 py-10 sm:px-6 lg:px-8 text-center"

@@ -168,6 +168,12 @@ const providerSignin = async (providerType: string) => {
           <span> Signin </span>
         </button>
       </div>
+      <p class="text-sm text-center text-black">
+        Already Have an account?
+        <NuxtLink to="/signin" class="text-[#00dc82] font-medium"
+          >Signin</NuxtLink
+        >.
+      </p>
     </form>
   </div>
 </template>

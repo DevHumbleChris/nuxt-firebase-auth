@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20">
+  <section class="py-20" id="features">
     <div class="container max-w-6xl mx-auto">
       <h2 class="text-4xl font-bold tracking-tight text-center text-[#00dc82]">
         Features
