@@ -1,5 +1,22 @@
 <script setup lang="ts">
+import { toast } from "vue3-toastify";
+
+const { user, signOutUser } = useFirebaseAuth();
+
 const showMenu = useState("showMenu", () => false);
+
+const userSignOut = async () => {
+  const { message, error } = await signOutUser();
+  if (error) {
+    return toast.error(error, {
+      theme: "colored",
+    });
+  }
+  toast.success(message as string, {
+    theme: "colored",
+  });
+  await navigateTo({ path: "/signin" });
+};
 </script>
 
 <template>
@@ -73,6 +90,7 @@ const showMenu = useState("showMenu", () => false);
                 >
               </div>
               <div
+                v-if="!user"
                 class="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0"
               >
                 <NuxtLink
@@ -111,6 +129,14 @@ const showMenu = useState("showMenu", () => false);
                   </svg>
                 </NuxtLink>
               </div>
+              <button
+                @click="userSignOut"
+                v-else
+                class="flex items-center gap-2 font-medium text-left md:w-auto md:px-0 md:mx-2 text-white lg:mx-3 md:text-center hover:text-[#00dc82]"
+              >
+                <Icon name="mdi:logout" class="flex-shrink-0 w-6 h-auto" />
+                <span>Logout</span>
+              </button>
             </div>
           </div>
         </div>

@@ -6,10 +6,14 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   type AuthProvider,
+  type User,
 } from "firebase/auth";
 
 export default function () {
   const { $auth } = useNuxtApp();
+
+  const user = useState<User | null>("firebaseUser", () => null);
+
   const providers = {
     google: new GoogleAuthProvider(),
     facebook: new FacebookAuthProvider(),
@@ -26,11 +30,18 @@ export default function () {
     password: string
   ): Promise<IResponse> => {
     try {
-      await createUserWithEmailAndPassword($auth, email, password);
-      return {
-        message: "User Created Successfully!",
-        error: null,
-      };
+      const userCreds = await createUserWithEmailAndPassword(
+        $auth,
+        email,
+        password
+      );
+      if (userCreds) {
+        user.value = userCreds.user;
+        return {
+          message: "User Created Successfully!",
+          error: null,
+        };
+      }
     } catch (error: unknown) {
       let errorResponse: IResponse = {
         message: null,
@@ -48,11 +59,18 @@ export default function () {
     password: string
   ): Promise<IResponse> => {
     try {
-      await signInWithEmailAndPassword($auth, email, password);
-      return {
-        message: "User Created Successfully!",
-        error: null,
-      };
+      const userCreds = await signInWithEmailAndPassword(
+        $auth,
+        email,
+        password
+      );
+      if (userCreds) {
+        user.value = userCreds.user;
+        return {
+          message: "User Created Successfully!",
+          error: null,
+        };
+      }
     } catch (error: unknown) {
       let errorResponse: IResponse = {
         message: null,
@@ -84,9 +102,32 @@ export default function () {
     }
 
     try {
-      await signInWithPopup($auth, selectedProvider.value);
+      const userCreds = await signInWithPopup($auth, selectedProvider.value);
+      if (userCreds) {
+        user.value = userCreds.user;
+        return {
+          message: `Signin With ${provider} Successfully!`,
+          error: null,
+        };
+      }
+    } catch (error: unknown) {
+      let errorResponse: IResponse = {
+        message: null,
+        error: null,
+      };
+      if (error instanceof Error) {
+        errorResponse.error = error.message;
+      }
+      return errorResponse;
+    }
+  };
+
+  const signOutUser = async () => {
+    try {
+      await $auth.signOut();
+      user.value = null;
       return {
-        message: `Signin With ${provider} Successfully!`,
+        message: `Signout Successfully!`,
         error: null,
       };
     } catch (error: unknown) {
@@ -105,5 +146,7 @@ export default function () {
     registerUser,
     signinUser,
     signinWith,
+    user,
+    signOutUser,
   };
 }

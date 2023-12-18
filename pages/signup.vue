@@ -4,6 +4,9 @@ import Signup from "~/components/auth/Signup.vue";
 definePageMeta({
   layout: "auth",
 });
+useHead({
+  titleTemplate: "%s - Signup",
+});
 </script>
 
 <template>

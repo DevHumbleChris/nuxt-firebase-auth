@@ -4,6 +4,9 @@ import Signin from "~/components/auth/Signin.vue";
 definePageMeta({
   layout: "auth",
 });
+useHead({
+  titleTemplate: "%s - Signin",
+});
 </script>
 
 <template>

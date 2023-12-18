@@ -1,6 +1,10 @@
 <script setup>
+const { user } = useFirebaseAuth();
 definePageMeta({
   middleware: ["auth"],
+});
+useHead({
+  titleTemplate: "%s - Protected",
 });
 </script>
 
