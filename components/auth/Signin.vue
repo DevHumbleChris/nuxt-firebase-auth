@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const email = useState("emailSignin", () => "");
 const password = useState("passwordSignin", () => "");
-const phoneNo = useState("phoneNumber", () => null);
 const { signinUser, signinWith } = useFirebaseAuth();
 import { toast } from "vue3-toastify";
 
@@ -21,34 +20,26 @@ const noOfCheckedProviders = computed(() => {
   return authStore?.noOfCheckedProviders;
 });
 
-const isUsePhoneNumber = computed(() => {
-  return authStore?.isUsePhoneNumber;
+const isUseEmailAddress = computed(() => {
+  return authStore?.isUseEmailAddress;
 });
 
-const setUsePhoneNumber = () => {
-  authStore?.setUsePhoneNumber();
-};
-
 const signInWithCredential = async () => {
-  if (isUsePhoneNumber) {
-    console.log("Hello");
-  } else {
-    isAuthenticating.value = true;
-    const { message, error } = await signinUser(email.value, password.value);
-    if (error) {
-      isAuthenticating.value = false;
-      return toast.error(error, {
-        theme: "colored",
-      });
-    }
+  isAuthenticating.value = true;
+  const { message, error } = await signinUser(email.value, password.value);
+  if (error) {
     isAuthenticating.value = false;
-    email.value = "";
-    password.value = "";
-    toast.success(message as string, {
+    return toast.error(error, {
       theme: "colored",
     });
-    await navigateTo({ path: "/protected" });
   }
+  isAuthenticating.value = false;
+  email.value = "";
+  password.value = "";
+  toast.success(message as string, {
+    theme: "colored",
+  });
+  await navigateTo({ path: "/protected" });
 };
 
 const providerSignin = async (providerType: string) => {
@@ -111,7 +102,11 @@ const providerSignin = async (providerType: string) => {
       </div>
     </div>
     <!-- End Of Socials -->
-    <form @submit.prevent="signInWithCredential" class="space-y-3">
+    <form
+      v-if="isUseEmailAddress"
+      @submit.prevent="signInWithCredential"
+      class="space-y-3"
+    >
       <div class="space-y-2">
         <div v-if="noOfCheckedProviders > 0" class="flex items-center">
           <div class="w-full h-[0.05rem] bg-gray-400 rounded-xl"></div>
@@ -120,22 +115,13 @@ const providerSignin = async (providerType: string) => {
         </div>
       </div>
       <div class="space-y-2">
-        <div v-if="!isUsePhoneNumber" class="space-y-2">
+        <div class="space-y-2">
           <div>
-            <div class="flex items-center justify-between">
-              <label
-                for="email"
-                class="block text-sm font-medium leading-6 text-gray-900"
-                >Email address</label
-              >
-              <button
-                type="button"
-                @click="setUsePhoneNumber"
-                class="block text-blue-600 font-bold text-sm"
-              >
-                Use Phone
-              </button>
-            </div>
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Email address</label
+            >
             <div class="mt-2">
               <input
                 id="email"
@@ -166,28 +152,6 @@ const providerSignin = async (providerType: string) => {
               />
             </div>
           </div>
-        </div>
-        <div v-if="isUsePhoneNumber" class="space-y-2">
-          <div class="flex items-center justify-between">
-            <label
-              for="phoneNo"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Phone Number</label
-            >
-            <button
-              type="button"
-              @click="setUsePhoneNumber"
-              class="block text-blue-600 font-bold text-sm"
-            >
-              Use Email
-            </button>
-          </div>
-          <vue-tel-input
-            v-model="phoneNo"
-            class="text-black py-2 shadow-sm rounded-md border border-gray-300"
-            id="phoneNo"
-            required
-          ></vue-tel-input>
         </div>
       </div>
       <div>

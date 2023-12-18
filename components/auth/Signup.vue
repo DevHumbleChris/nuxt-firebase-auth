@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const email = useState("emailSignin", () => "");
 const password = useState("passwordSignin", () => "");
-const { signinUser, signinWith } = useFirebaseAuth();
+const { signinWith, registerUser } = useFirebaseAuth();
 import { toast } from "vue3-toastify";
 
 const authStore = useAuthStore();
@@ -20,9 +20,13 @@ const noOfCheckedProviders = computed(() => {
   return authStore?.noOfCheckedProviders;
 });
 
+const isUseEmailAddress = computed(() => {
+  return authStore?.isUseEmailAddress;
+});
+
 const signInWithCredential = async () => {
   isAuthenticating.value = true;
-  const { message, error } = await signinUser(email.value, password.value);
+  const { message, error } = await registerUser(email.value, password.value);
   if (error) {
     isAuthenticating.value = false;
     return toast.error(error, {
@@ -98,7 +102,11 @@ const providerSignin = async (providerType: string) => {
       </div>
     </div>
     <!-- End Of Socials -->
-    <form @submit.prevent="signInWithCredential" class="space-y-3">
+    <form
+      v-if="isUseEmailAddress"
+      @submit.prevent="signInWithCredential"
+      class="space-y-3"
+    >
       <div class="space-y-2">
         <div v-if="noOfCheckedProviders > 0" class="flex items-center">
           <div class="w-full h-[0.05rem] bg-gray-400 rounded-xl"></div>
@@ -107,40 +115,42 @@ const providerSignin = async (providerType: string) => {
         </div>
       </div>
       <div class="space-y-2">
-        <div>
-          <label
-            for="email"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Email address</label
-          >
-          <div class="mt-2">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              v-model="email"
-              required
-              class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
+        <div class="space-y-2">
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Email address</label
+            >
+            <div class="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                v-model="email"
+                required
+                class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <label
-            for="password"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Password</label
-          >
-          <div class="mt-2">
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autocomplete="password"
-              v-model="password"
-              required
-              class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Password</label
+            >
+            <div class="mt-2">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="password"
+                v-model="password"
+                required
+                class="block w-full rounded-md border-0 py-2 px-3 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -155,7 +165,7 @@ const providerSignin = async (providerType: string) => {
             name="eos-icons:bubble-loading"
             class="w-5"
           />
-          <span> Create Account </span>
+          <span> Signin </span>
         </button>
       </div>
     </form>
