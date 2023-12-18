@@ -42,10 +42,6 @@ const authBuildType = useState("authBuildType", () => "signin");
 const setAuthBuildType = (buildType: string) => {
   authBuildType.value = buildType;
 };
-
-const previewScreen = async (screenType: string) => {
-  await navigateTo({ path: screenType });
-};
 </script>
 
 <template>
