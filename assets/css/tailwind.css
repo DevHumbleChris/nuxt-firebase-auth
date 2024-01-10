@@ -74,6 +74,10 @@
     @apply font-raleway;
   }
   body {
-    @apply bg-[#0c0129] text-foreground;
+    @apply text-foreground;
   }
+}
+
+body { 
+  @apply bg-[#0c0129];
 }
